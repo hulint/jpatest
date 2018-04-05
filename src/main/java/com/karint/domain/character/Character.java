@@ -1,6 +1,4 @@
-package com.karint.domain;
-
-import java.io.Serializable;
+package com.karint.domain.character;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,20 +6,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.karint.domain.AccountInfo;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@Entity
 @Data
-public class Skill implements Serializable {
-	private static final long serialVersionUID = 7731075245323198713L;
-
+@Entity
+@EqualsAndHashCode(of="id", callSuper=false)
+public class Character extends AccountInfo {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
+	@Column
+	private Long id;
 
 	@Column
 	private String name;
-
-	@Column
-	private String type;
 }

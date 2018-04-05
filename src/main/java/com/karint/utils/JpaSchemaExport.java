@@ -14,6 +14,11 @@ public class JpaSchemaExport {
  	}
 
 	public static void main(String[] args) throws IOException {
+		boolean isFile = false;
+		if( args != null && args.length > 0){
+			isFile ="file".equals( args[0] );
+		}
+
 		Properties props = new Properties();
 		props.put(AvailableSettings.FORMAT_SQL, "true");
 		props.put(AvailableSettings.USE_NEW_ID_GENERATOR_MAPPINGS, false);
@@ -21,10 +26,13 @@ public class JpaSchemaExport {
 //		props.put(AvailableSettings.PHYSICAL_NAMING_STRATEGY, "com.xlgames.support.utils.jpa.SpringPhysicalNamingStrategy");
 		props.put(AvailableSettings.HBM2DDL_DELIMITER, ";");
 
-		/* console */
-		props.put(AvailableSettings.HBM2DDL_SCRIPTS_CREATE_TARGET, new PrintWriter(System.out));
-		/* create file */
-//		props.put(AvailableSettings.HBM2DDL_SCRIPTS_CREATE_TARGET, "create.sql");
+		if( isFile){
+			/* create file */
+			props.put(AvailableSettings.HBM2DDL_SCRIPTS_CREATE_TARGET, "create.sql");
+		} else {
+			/* console */
+			props.put(AvailableSettings.HBM2DDL_SCRIPTS_CREATE_TARGET, new PrintWriter(System.out));
+		}
 		Persistence.generateSchema(PERSISTENCE_UNIT_NAME, props);
 	}
 
